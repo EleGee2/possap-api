@@ -131,3 +131,6 @@ dist
 i.ts
 
 .vscode/
+
+./claude
+.claude
