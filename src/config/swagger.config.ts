@@ -41,8 +41,8 @@ export class PaginatedResponseDto {
 
 export const setupSwagger = (app: NestExpressApplication) => {
   const config = new DocumentBuilder()
-    .setTitle('mira core api')
-    .setDescription('pos for ambitious businesses')
+    .setTitle('possap')
+    .setDescription('police specialized services automation project')
     .setVersion('0.0.1')
     .addBearerAuth()
     .build();
