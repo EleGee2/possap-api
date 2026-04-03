@@ -48,7 +48,7 @@ export class UserWorker extends WorkerHost {
       to: data.email,
       subject: 'Verify your email',
       template: {
-        id: 'email_verify',
+        id: 'verify-email',
         variables: {
           firstName: data.first_name,
           d1: token[0],
