@@ -1,3 +1,4 @@
+import { ProviderStatus, ProviderTag, ProviderType } from '@models/provider.model';
 import { QueryInterface } from 'sequelize';
 import { MigrationFn } from 'umzug';
 
@@ -8,11 +9,9 @@ export const up: SequelizeMigration = async ({ context }) => {
   await context.bulkInsert(TABLE_NAME, [
     {
       name: 'Resend',
-      tag: 'resend',
-      description: 'Email provider',
-      is_active: true,
-      created_at: new Date(),
-      updated_at: new Date(),
+      tag: ProviderTag.Resend,
+      status: ProviderStatus.Active,
+      type: ProviderType.Email,
     },
   ]);
 };

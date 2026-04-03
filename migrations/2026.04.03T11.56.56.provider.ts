@@ -18,7 +18,7 @@ export const up: SequelizeMigration = async ({ context }) => {
       allowNull: false,
     },
     tag: {
-      type: DataType.ENUM(ProviderTag.Paystack),
+      type: DataType.ENUM(ProviderTag.Paystack, ProviderTag.Resend),
       allowNull: false,
     },
     status: {
@@ -49,4 +49,8 @@ export const up: SequelizeMigration = async ({ context }) => {
 
 export const down: SequelizeMigration = async ({ context }) => {
   await context.dropTable(TABLE_NAME);
+  // PostgreSQL keeps ENUM types alive after the table is dropped — remove them explicitly
+  await context.sequelize.query('DROP TYPE IF EXISTS "enum_provider_tag"');
+  await context.sequelize.query('DROP TYPE IF EXISTS "enum_provider_status"');
+  await context.sequelize.query('DROP TYPE IF EXISTS "enum_provider_type"');
 };
