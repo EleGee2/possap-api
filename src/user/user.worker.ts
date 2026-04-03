@@ -7,12 +7,12 @@ import { Job } from 'bullmq';
 import { GenericEmailJobData, PasswordResetEmailJobData } from './types';
 
 @QueueWorker(QueueName.Email)
-export class EmailWorker extends WorkerHost {
+export class UserWorker extends WorkerHost {
   constructor(private readonly providerService: ProviderService) {
     super();
   }
 
-  private logger = new Logger(EmailWorker.name);
+  private logger = new Logger(UserWorker.name);
 
   async process(job: Job<any, any, EmailJob>) {
     switch (job.name) {
@@ -31,7 +31,7 @@ export class EmailWorker extends WorkerHost {
       to: data.email,
       subject: 'Reset your password',
       template: {
-        id: 'password_reset',
+        id: 'password-reset',
         variables: {
           firstName: data.firstName,
           resetUrl: data.resetUrl,

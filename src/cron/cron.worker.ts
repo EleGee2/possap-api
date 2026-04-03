@@ -1,7 +1,7 @@
 import { WorkerHost } from '@nestjs/bullmq';
 import { Job } from 'bullmq';
 import { Logger } from '@nestjs/common';
-import { CronJob, QueueName } from '@common/constants';
+import { CronJob, QueueName } from '@src/queue/constants';
 import { QueueWorker } from '@common/decorators';
 
 @QueueWorker(QueueName.Cron)

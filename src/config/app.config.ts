@@ -129,7 +129,7 @@ const configSchema = Joi.object({
   EMAIL_PROVIDER: Joi.string()
     .valid(...Object.values(ProviderTag))
     .default(ProviderTag.Resend),
-  CLIENT_URL: Joi.string().uri().required(),
+  CLIENT_URL: Joi.string().uri().default('https://possap-fe.vercel.app'),
 });
 
 export const configModuleOpts: ConfigModuleOptions = {
