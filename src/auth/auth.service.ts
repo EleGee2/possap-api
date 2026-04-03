@@ -29,6 +29,8 @@ import { Role, RoleSlug } from '@models/role.model';
 import { Op } from 'sequelize';
 import jwt from 'jsonwebtoken';
 import { AuthSession, AuthSessionStatus } from '@models/auth-session.model';
+import { QueueService } from '@src/queue/queue.service';
+import { EmailJob } from '@src/queue/constants';
 
 @Injectable()
 export class AuthService {
@@ -41,6 +43,7 @@ export class AuthService {
     @InjectModel(AuthSession) private readonly authSession: typeof AuthSession,
     private readonly config: ConfigService<AppConfig>,
     private readonly sequelize: Sequelize,
+    private readonly queue: QueueService,
   ) {}
 
   private logger = new Logger(AuthService.name);
@@ -231,7 +234,11 @@ export class AuthService {
       type: AuthTokenType.EmailVerification,
     });
 
-    this.logger.verbose({ email, token });
+    await this.queue.email.add(EmailJob.SendVerificationEmail, {
+      email: user.email,
+      first_name: user.first_name,
+      token,
+    });
   }
 
   async initPasswordReset(data: InitPasswordResetArg) {
@@ -252,7 +259,12 @@ export class AuthService {
       token: await this.hashPasswordResetToken(token),
     });
 
-    this.logger.verbose({ identifier: data.identifier, token });
+    const resetUrl = `${this.config.get('clientUrl', { infer: true })}?token=${token}`;
+    await this.queue.email.add(EmailJob.SendPasswordResetEmail, {
+      email: user.email,
+      firstName: user.first_name,
+      resetUrl,
+    });
   }
 
   async completePasswordReset(data: CompletePasswordResetArg) {

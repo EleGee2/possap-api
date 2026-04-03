@@ -14,6 +14,8 @@ import { RegisterArg } from './types';
 import { hashPassword } from '@common/utils/crypto';
 import { AuthTokenType } from '@models/auth-token.model';
 import { AuthService } from '@src/auth/auth.service';
+import { QueueService } from '@src/queue/queue.service';
+import { EmailJob } from '@src/queue/constants';
 
 @Injectable()
 export class UserService {
@@ -24,6 +26,7 @@ export class UserService {
     @InjectModel(Role) private readonly role: typeof Role,
     private readonly authService: AuthService,
     private readonly sequelize: Sequelize,
+    private readonly queue: QueueService,
   ) {}
 
   private logger = new Logger(UserService.name);
@@ -79,7 +82,6 @@ export class UserService {
 
       await transaction.commit();
 
-      // send email to user
       const verificationToken = await this.authService.generateVerificationToken({
         userId: user.id,
         type: AuthTokenType.EmailVerification,
@@ -87,6 +89,11 @@ export class UserService {
       });
 
       this.logger.verbose(`verification token: ${verificationToken}`);
+      await this.queue.email.add(EmailJob.SendVerificationEmail, {
+        email: user.email,
+        first_name: user.first_name,
+        token: verificationToken,
+      });
 
       return this.normalizeUser(user);
     } catch (error) {

@@ -15,6 +15,8 @@ import { loggerModuleOpts } from '@config/logger.config';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { QueueModule } from './queue/queue.module';
+import { ProviderModule } from './provider/provider.module';
 
 @Module({
   imports: [
@@ -27,6 +29,8 @@ import { AuthModule } from './auth/auth.module';
     CronModule,
     UserModule,
     AuthModule,
+    QueueModule,
+    ProviderModule,
   ],
   controllers: [AppController],
   providers: [AppService],

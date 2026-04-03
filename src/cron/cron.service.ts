@@ -1,7 +1,7 @@
 import { AppConfig } from '@config/app.config';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { CronJob, QueueName } from '@common/constants';
+import { CronJob, QueueName } from '@src/queue/constants';
 import { InjectQueue } from '@nestjs/bullmq';
 import { Queue } from 'bullmq';
 

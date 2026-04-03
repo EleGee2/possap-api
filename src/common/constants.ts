@@ -1,11 +1,3 @@
-export enum QueueName {
-  Cron = 'cron',
-}
-
-export enum CronJob {
-  Init = 'init',
-}
-
 export enum WeekDay {
   Sunday = 'sun',
   Monday = 'mon',
