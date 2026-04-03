@@ -6,9 +6,10 @@ import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
-  imports: [SequelizeModule.forFeature([User, UserAuth, UserRole, Role])],
+  imports: [SequelizeModule.forFeature([User, UserAuth, UserRole, Role]), AuthModule],
   controllers: [UserController],
   providers: [UserService],
 })

@@ -217,6 +217,23 @@ export class AuthService {
     };
   }
 
+  async resendEmailVerification(email: string) {
+    const user = await this.user.findOne({ where: { email } });
+
+    if (!user) {
+      return this.logger.warn(
+        `email verification resend requested for non-existent user: ${email}`,
+      );
+    }
+
+    const token = await this.generateVerificationToken({
+      userId: user.id,
+      type: AuthTokenType.EmailVerification,
+    });
+
+    this.logger.verbose({ email, token });
+  }
+
   async initPasswordReset(data: InitPasswordResetArg) {
     const user = await this.user.findOne({ where: { email: data.identifier } });
 

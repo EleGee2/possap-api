@@ -15,6 +15,10 @@ export class CompletePasswordResetReqDto {
   password: string;
 }
 
+export class ResendEmailVerificationReqDto {
+  email: string;
+}
+
 export class VerifyEmailReqDto {
   token: string;
   email: string;

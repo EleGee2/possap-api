@@ -4,6 +4,7 @@ import {
   CompletePasswordResetReqDto,
   CreateAuthSessionReqDto,
   InitPasswordResetReqDto,
+  ResendEmailVerificationReqDto,
   VerifyEmailReqDto,
 } from '../dto/req.dto';
 
@@ -22,6 +23,10 @@ export const completePasswordResetParamSchema = Joi.object<CompletePasswordReset
 
 export const completePasswordResetReqSchema = Joi.object<CompletePasswordResetReqDto>({
   password: Joi.string().required(),
+});
+
+export const resendEmailVerificationReqSchema = Joi.object<ResendEmailVerificationReqDto>({
+  email: Joi.string().email().required(),
 });
 
 export const verifyEmailReqSchema = Joi.object<VerifyEmailReqDto>({
