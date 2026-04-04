@@ -4,6 +4,7 @@ export enum ProviderTag {
   Paystack = 'paystack',
   MockProvider = 'mock-provider',
   Resend = 'resend',
+  Monnify = 'monnify',
 }
 
 export enum ProviderStatus {
@@ -14,6 +15,7 @@ export enum ProviderStatus {
 export enum ProviderType {
   Payment = 'payment',
   Email = 'email',
+  Identity = 'identity',
 }
 
 export interface ProviderMeta {

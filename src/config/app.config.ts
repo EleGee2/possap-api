@@ -56,6 +56,17 @@ export interface AppConfig {
   email: {
     provider: ProviderTag;
   };
+  cache: {
+    redisUrl: string;
+  };
+  monnify: {
+    baseUrl: string;
+    apiKey: string;
+    secretKey: string;
+  };
+  identity: {
+    provider: ProviderTag;
+  };
 }
 
 const config = (): AppConfig => ({
@@ -103,6 +114,17 @@ const config = (): AppConfig => ({
     provider: process.env.EMAIL_PROVIDER! as ProviderTag,
   },
   clientUrl: process.env.CLIENT_URL!,
+  cache: {
+    redisUrl: process.env.CACHE_REDIS_URL!,
+  },
+  monnify: {
+    baseUrl: process.env.MONNIFY_BASE_URL!,
+    apiKey: process.env.MONNIFY_API_KEY!,
+    secretKey: process.env.MONNIFY_SECRET_KEY!,
+  },
+  identity: {
+    provider: process.env.IDENTITY_PROVIDER! as ProviderTag,
+  },
 });
 
 const configSchema = Joi.object({
@@ -130,6 +152,13 @@ const configSchema = Joi.object({
     .valid(...Object.values(ProviderTag))
     .default(ProviderTag.Resend),
   CLIENT_URL: Joi.string().uri().default('https://possap-fe.vercel.app'),
+  CACHE_REDIS_URL: Joi.string().regex(REDIS_URL_RE).default('redis://localhost:6379/1'),
+  MONNIFY_BASE_URL: Joi.string().uri().default('https://sandbox.monnify.com'),
+  MONNIFY_API_KEY: Joi.string().default('MK_TEST_GC3B8XG2XX'),
+  MONNIFY_SECRET_KEY: Joi.string().default('A663NRZA544DDPEM7KDN7Z8HRV6YXD8S'),
+  IDENTITY_PROVIDER: Joi.string()
+    .valid(...Object.values(ProviderTag))
+    .default(ProviderTag.Monnify),
 });
 
 export const configModuleOpts: ConfigModuleOptions = {

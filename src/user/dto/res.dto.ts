@@ -13,3 +13,22 @@ class UserDto {
 export class RegisterUserResDto extends BaseResponseDto {
   data: UserDto;
 }
+
+class NinLookupDataDto {
+  successful: boolean;
+  providerTag: string;
+  failureReason: string | null;
+  data: {
+    nin: string;
+    firstName: string;
+    lastName: string;
+    middleName: string;
+    dateOfBirth: string;
+    gender: string;
+    mobileNumber: string;
+  } | null;
+}
+
+export class NinLookupResDto extends BaseResponseDto {
+  data: NinLookupDataDto;
+}

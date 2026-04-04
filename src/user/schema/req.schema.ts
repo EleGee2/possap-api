@@ -24,3 +24,7 @@ export const registerUserSchema = Joi.object<RegisterUserDto>({
   address: Joi.string().trim().optional().allow(null),
   meta: Joi.object().unknown(true).optional().allow(null),
 });
+
+export const ninLookupParamSchema = Joi.object({
+  nin: Joi.string().length(11).pattern(/^\d+$/).required(),
+});

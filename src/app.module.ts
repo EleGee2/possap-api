@@ -6,7 +6,7 @@ import { ConfigModule } from '@nestjs/config/dist/config.module';
 import { configModuleOpts } from '@config/app.config';
 import { bullConfigOpts } from '@config/bull.config';
 import { sequelizeConfigOpts } from '@config/sequelize.config';
-import { throttlerModuleOpts } from '@config/throttler.config';
+import { appThrottlerProvider, throttlerModuleOpts } from '@config/throttler.config';
 import { BullModule } from '@nestjs/bullmq';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { ThrottlerModule } from '@nestjs/throttler';
@@ -17,6 +17,8 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { QueueModule } from './queue/queue.module';
 import { ProviderModule } from './provider/provider.module';
+import { CacheModule } from './cache/cache.module';
+import { appValidationProvider } from '@common/joi';
 
 @Module({
   imports: [
@@ -31,8 +33,9 @@ import { ProviderModule } from './provider/provider.module';
     AuthModule,
     QueueModule,
     ProviderModule,
+    CacheModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, appThrottlerProvider, appValidationProvider],
 })
 export class AppModule {}
