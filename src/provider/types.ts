@@ -18,3 +18,25 @@ export type SendEmailRes = {
   failureReason: string | null;
   providerTimeout: boolean;
 };
+
+export type NinLookupArg = {
+  nin: string;
+  provider?: ProviderTag;
+};
+
+export type NinLookupResData = {
+  nin: string;
+  firstName: string;
+  lastName: string;
+  middleName: string;
+  dateOfBirth: string;
+  gender: string;
+  mobileNumber: string;
+};
+
+export type NinLookupRes = {
+  successful: boolean;
+  data: NinLookupResData | null;
+  providerTag: ProviderTag;
+  failureReason: string | null;
+};
